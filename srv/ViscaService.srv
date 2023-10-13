@@ -1,0 +1,12 @@
+#Server Operations
+std_msgs/Header header
+
+uint8 SET_ZOOM = 10
+uint8 SET_RESOLUTION = 11  #
+uint8 SET_WIDE_TELE = 12   # command: 0-> wide | 1-> tele
+uint8 type
+uint32 command
+
+---
+uint8 results
+std_msgs/Bool ack
