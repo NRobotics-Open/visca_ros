@@ -12,8 +12,8 @@ from netifaces import interfaces, ifaddresses, AF_INET
 class LauncherClass(object):
     def __init__(self) -> None:
         self.cnf_path = os.path.join(rospkg.RosPack().get_path("visca_ros"), 'config/config.yaml')
-        cnf_data = self.load_from_yaml(self.cnf_path)
-        print(cnf_data)
+        self.cnf_data = self.load_from_yaml(self.cnf_path)
+        print(self.cnf_data)
     
     def load_from_yaml(self, path):
         data = None
@@ -74,9 +74,9 @@ class LauncherClass(object):
     def config_eeprom(self):
         subprocess.run('python3 eeprom_config.py', shell=True, capture_output=False)
         print('Done Configuring EEPROM')
-        with open(self.cnf_path, 'w') as stream:
-            data = yaml.safe_load(stream)
-            data['config_eeprom'] = False
+        self.cnf_data['config_eeprom'] = False
+        with open(self.cnf_path, 'w') as file:
+            yaml.dump(self.cnf_data, file)
         print('EEPROM flag unset success!')
         subprocess.run('sudo reboot', shell=True, capture_output=False)
     

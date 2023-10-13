@@ -1,6 +1,5 @@
-host_ip: '192.168.3.120'
+config_eeprom: true
+host_ip: 192.168.3.120
 host_port: 11311
-
-remote_run: False
+remote_run: false
 timeout: 30
-config_eeprom: True
