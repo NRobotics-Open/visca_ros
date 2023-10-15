@@ -23,7 +23,7 @@ class LauncherClass(object):
             self.port = data['host_port']
             self.remote_run = data['remote_run']
             self.timeout = data['timeout']
-            self.configure_eeprom = data['config_eeprom']
+            self.can_config_eeprom = data['config_eeprom']
         return data
         
     def is_ros_running(self):
@@ -72,8 +72,8 @@ class LauncherClass(object):
         return IP
     
     def config_eeprom(self):
-        subprocess.run('python3 eeprom_config.py', shell=True, capture_output=False)
-        print('Done Configuring EEPROM')
+        res = subprocess.run('python3 eeprom_config.py', shell=True, capture_output=True)
+        print('\nDone Configuring EEPROM: \n', res)
         self.cnf_data['config_eeprom'] = False
         with open(self.cnf_path, 'w') as file:
             yaml.dump(self.cnf_data, file)
@@ -81,7 +81,7 @@ class LauncherClass(object):
         subprocess.run('sudo reboot', shell=True, capture_output=False)
     
     def bring_up(self):
-        if(self.config_eeprom):
+        if(self.can_config_eeprom):
             self.config_eeprom()
 
         if(not self.remote_run):
