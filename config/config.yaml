@@ -1,5 +1,12 @@
 host_ip: 192.168.3.120
 host_port: 11311
-remote_run: true
-config_eeprom: false
-timeout: 30
+
+#Camera config
+first_run: false         #Set this flag to force camera digital output and resolution (requires camera reboot)
+server_name: '/ZoomCamServer'
+digital_output: 0
+monitoring_mode: 15
+
+remote_run: true        #Run the launch file in Standalone or Remote mode
+timeout: 100            #How long to keep trying to reach ROS Master (works with remote_run)
+config_eeprom: false    #Configures the Camera's EEPROM (requires camera reboot)

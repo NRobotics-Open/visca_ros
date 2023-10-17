@@ -1,11 +1,147 @@
 #Server Operations
 std_msgs/Header header
 
-uint8 SET_ZOOM = 10
-uint8 SET_RESOLUTION = 11  #
-uint8 SET_WIDE_TELE = 12   # command: 0-> wide | 1-> tele
-uint8 type
-uint32 command
+#Commands without parameter:
+#===========================
+uint16 SET_ZOOM_TELE = 1            #(set the zoom to maximum)
+uint16 SET_ZOOM_WIDE = 2           #(set the zoom to minimum)
+uint16 SET_ZOOM_STOP = 3           #(stop zooming)
+uint16 SET_FOCUS_FAR = 4           #(set the focus to far)
+uint16 SET_FOCUS_NEAR = 5           #(set the focus to near)
+uint16 SET_FOCUS_STOP = 6          #(stop focusing)
+uint16 SET_FOCUS_ONE_PUSH = 7      #(not for D30)
+uint16 SET_FOCUS_INFINITY = 8      #(not for D30)
+uint16 SET_FOCUS_AUTOSENSE_HIGH = 9 #(not for D30)
+uint16 SET_FOCUS_AUTOSENSE_LOW = 10 #(not for D30)
+uint16 SET_WHITEBAL_ONE_PUSH   = 11 #(push trigger for whitebalance in OnePush mode)
+uint16 SET_RGAIN_UP = 12            #(not for D30)
+uint16 SET_RGAIN_DOWN = 13          #(not for D30)
+uint16 SET_RGAIN_RESET = 14         #(not for D30)
+uint16 SET_BGAIN_UP = 15            #(not for D30)
+uint16 SET_BGAIN_DOWN = 16          #(not for D30)
+uint16 SET_BGAIN_RESET = 17         #(not for D30)
+uint16 SET_SHUTTER_UP = 18          #(increase the shutter speed, available only with shutter_priority or AE_Manual)
+uint16 SET_SHUTTER_DOWN = 19        #(decrease the shutter speed, available only with shutter_priority or AE_Manual)
+uint16 SET_SHUTTER_RESET = 20       #(reset the shutter speed, available only with shutter_priority or AE_Manual)
+uint16 SET_IRIS_UP = 21             #(open up the iris, available only with iris_priority or AE_Manual)
+uint16 SET_IRIS_DOWN = 22           #(close the iris, available only with iris_priority or AE_Manual)
+uint16 SET_IRIS_RESET = 23          #(reset the iris, available only with iris_priority or AE_Manual)
+uint16 SET_GAIN_UP = 24             #(increase the gain, available only with AE_Manual)
+uint16 SET_GAIN_DOWN = 25           #(decrease the gain, available only with AE_Manual)
+uint16 SET_GAIN_RESET = 26          #(reset the gain, available only with AE_Manual)
+uint16 SET_BRIGHT_UP = 27           #(brighten the image, available only with bright_mode)
+uint16 SET_BRIGHT_DOWN = 28         #(darken the image, available only with bright_mode)
+uint16 SET_BRIGHT_RESET = 29        #(reset the image brightness, available only with bright_mode)
+uint16 SET_APERTURE_UP = 30         #(not for D30)
+uint16 SET_APERTURE_DOWN = 31       #(not for D30)
+uint16 SET_APERTURE_RESET = 32      #(not for D30)
+uint16 SET_EXP_COMP_UP = 33         #(not for D30)
+uint16 SET_EXP_COMP_DOWN = 34       #(not for D30)
+uint16 SET_EXP_COMP_RESET = 35      #(not for D30)
+uint16 SET_TITLE_CLEAR = 36         #(not for D30)
+uint16 SET_IRRECEIVE_ON = 37        #(enable IR remote controller)
+uint16 SET_IRRECEIVE_OFF = 38       #(disable IR remote controller)
+uint16 SET_IRRECEIVE_ONOFF = 39     #(toggle IR remote controller)
+uint16 SET_PANTILT_HOME = 40        #(set pan/tilt position to center)
+uint16 SET_PANTILT_RESET = 41       #(initialize pan/tilt motors)
+uint16 SET_PANTILT_LIMIT_DOWNLEFT_CLEAR = 42 #(remove pan/tilt limits for lower left position)
+uint16 SET_PANTILT_LIMIT_UPRIGHT_CLEAR = 43  #(remove pan/tilt limits for upper right position)
+uint16 SET_DATASCREEN_ON = 44       #(show data display)
+uint16 SET_DATASCREEN_OFF = 45      #(hide data display)
+uint16 SET_DATASCREEN_ONOFF = 46    #(toggle data display)
+
+#Commands with one boolean parameter (0|1):
+#==========================================
+uint16 SET_POWER = 100            #(set standby power state)
+uint16 SET_KEYLOCK = 101          #(set or release keylock)
+uint16 SET_DZOOM = 102            #(not for D30)
+uint16 SET_FOCUS_AUTO = 103       #(turn autofocus on or off)
+uint16 SET_EXP_COMP_POWER = 104   #(not for D30)
+uint16 SET_SLOW_SHUTTER_AUTO = 105 #(not for D30)
+uint16 SET_BACKLIGHT_COMP = 106   #(turn backlight compensation on or off)
+uint16 SET_ZERO_LUX_SHOT = 107    #(not for D30)
+uint16 SET_IR_LED = 108           #(not for D30)
+uint16 SET_MIRROR = 109           #(not for D30)
+uint16 SET_FREEZE = 110           #(not for D30)
+uint16 SET_DISPLAY = 111          #(not for D30)
+uint16 SET_DATE_DISPLAY = 112     #(not for D30)
+uint16 SET_TIME_DISPLAY = 113     #(not for D30)
+uint16 SET_TITLE_DISPLAY = 114    #(not for D30)
+
+#Commands with one integer parameter:
+#====================================
+uint16 SET_ZOOM_TELE_SPEED = 150      #(set the zoom to maximum with a speed between 2 and 7)
+uint16 SET_ZOOM_WIDE_SPEED = 151      #(set the zoom to minimum with a speed between 2 and 7)
+uint16 SET_ZOOM_VALUE = 152            #(set the zoom to the given value between 0 and 1023) between 0 - 31424 for EW9500H
+uint16 SET_FOCUS_FAR_SPEED = 153      #(not for D30)
+uint16 SET_FOCUS_NEAR_SPEED = 154     #(not for D30)
+uint16 SET_FOCUS_VALUE = 155          #(set the focus to the given value between 1000 and 40959)
+uint16 SET_FOCUS_NEAR_LIMIT = 156     #(not for D30)
+uint16 SET_WHITEBAL_MODE = 157         #(set the whitebalance mode to 0: Auto, 1: Indoor, 2: Outdoor, 3: OnePush)
+uint16 SET_RGAIN_VALUE = 158          #(not for D30)
+uint16 SET_BGAIN_VALUE = 159          #(not for D30)
+uint16 SET_SHUTTER_VALUE = 160        #(set the shutter value between  0: 1/60 and 27: 1/10000)
+uint16 SET_IRIS_VALUE = 161           #(set the iris opening to a value between 0: closed and 17: F1.8)
+uint16 SET_GAIN_VALUE = 162           #(set the gain value between 1: 0dB and 7: +18dB)
+uint16 SET_BRIGHT_VALUE = 163         #(not for D30)
+uint16 SET_APERTURE_VALUE = 164       #(not for D30)
+uint16 SET_EXP_COMP_VALUE = 165       #(not for D30)
+uint16 SET_AUTO_EXP_MODE = 166         #(set the AE mode to 0: Full Auto, 3: Manual, 10: Shutter priority, 11: Iris priority, 13: Bright Mode)
+uint16 SET_WIDE_MODE = 167             #(not for D30)
+uint16 SET_PICTURE_EFFECT = 168        #(not for D30)
+uint16 SET_DIGITAL_EFFECT = 169        #(not for D30)
+uint16 SET_DIGITAL_EFFECT_LEVEL = 170 #(not for D30)
+uint16 MEMORY_SET = 171             #(save the current position to channel 0 to 5)
+uint16 MEMORY_RECALL = 172          #(recall the current position from channel 0 to 5)
+uint16 MEMORY_RESET = 173           #(reset a channel 0 to 5)
+
+#Commands with two integer parameters:
+#=====================================
+uint16 SET_ZOOM_AND_FOCUS_VALUE = 200   #<zoom> <focus>             (not for D30, zoom 0 to 1023, focus 1000 to 40959)
+uint16 SET_PANTILT_UP = 201             #<pan_speed>, <tilt_speed>             (move up, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_DOWN = 202           #<pan_speed>, <tilt_speed>           #(move down, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_LEFT = 203           #<pan_speed>, <tilt_speed>           #(move left, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_RIGHT = 204          #<pan_speed>, <tilt_speed>          #(move right, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_UPLEFT = 205         #<pan_speed>, <tilt_speed>         #(move up and left, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_UPRIGHT = 206        #<pan_speed>, <tilt_speed>        #(move up and right, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_DOWNLEFT = 207       #<pan_speed>, <tilt_speed>       #(move down and left, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_DOWNRIGHT = 208      #<pan_speed>, <tilt_speed>      #(move down and right, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_STOP = 209           #<pan_speed>, <tilt_speed>           #(stop moving, pan_speed from 1 to 24, tilt speed from 1 to 20)
+uint16 SET_PANTILT_LIMIT_UPRIGHT = 210  #<pan_limit>, <tilt_limit>  #(limit movement upper right corner, pan limit: -879 to 880, tilt limit: -299 to 300)
+uint16 SET_PANTILT_LIMIT_DOWNLEFT = 211 #<pan_limit>, <tilt_limit> #(limit movement lower left corner, pan limit: -879 to 880, tilt limit: -299 to 300)
+
+#Commands with four integer parameters:
+#======================================
+uint16 SET_PANTILT_ABSOLUTE_POSITION = 250       #<pan_speed>, <tilt_speed>, <pan_position>, <tilt_position> (set position, 
+                                                #pan_speed from 1 to 24, 
+						                        #tilt speed from 1 to 20,
+						                        #pan_pos: -879 to 880, 
+						                        #tilt_pos: -299 to 300)
+uint16 SET_PANTILT_RELATIVE_POSITION = 251        #<pan_speed>, <tilt_speed>, <pan_position>, <tilt_position> (set position,
+                                                #pan_speed from 1 to 24, 
+						                        #tilt speed from 1 to 20,
+						                        #pan_pos: -879 to 880, 
+						                        #tilt_pos: -299 to 300)
+uint16 SET_TITLE_PARAMS = 252                     #<vposition> <hposition> <color> <blink> (not for D30, set title params)
+
+#Commands with five parameters:
+#==============================
+uint16 SET_DATE_TIME = 300                           #<year> <month> <day> <hour> <minute>       (not for D30, set date and time)
+uint16 SET_TITLE     = 301                           #<vposition> <hposition> <color> <blink> <text> (not for D30, 
+                                                        #  set title params
+                                                        #  and title text)
+
+#Commands for EW9500H:
+#==============================
+uint16 SET_RESOLUTION = 400  #(for FCB-EW9500H)
+uint16 SET_DIGITAL_OUTPUT = 401 #(for FCB-EW9500H) Command: 0-> HDMI/YUV, 1-> HDMI/RGB, 2->DVI/RGB
+
+
+#Input Parameters
+#==============================
+uint16 type
+uint32[] command
+string text
 
 ---
 uint8 results

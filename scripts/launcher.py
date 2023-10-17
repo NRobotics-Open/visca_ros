@@ -5,9 +5,10 @@ import yaml
 import threading
 import shlex
 import os
-import rospkg
+import rospkg, rospy
 import time
 from netifaces import interfaces, ifaddresses, AF_INET
+from visca_ros.srv import ViscaService, ViscaServiceRequest, ViscaServiceResponse
 
 class LauncherClass(object):
     def __init__(self) -> None:
@@ -24,6 +25,10 @@ class LauncherClass(object):
             self.remote_run = data['remote_run']
             self.timeout = data['timeout']
             self.can_config_eeprom = data['config_eeprom']
+            self.is_first_run = data['first_run']
+            self.server_name = data['server_name']
+            self.digital_output = data['digital_output']
+            self.resolution = data['monitoring_mode']
         return data
         
     def is_ros_running(self):
@@ -80,9 +85,36 @@ class LauncherClass(object):
         print('EEPROM flag unset success!')
         subprocess.run('sudo reboot', shell=True, capture_output=False)
     
+    def config_first_run(self):
+        try:
+            rospy.wait_for_service(self.server_name, timeout=rospy.Duration(30.0))
+            viscacam_srvr = rospy.ServiceProxy(self.server_name, ViscaService)
+            try:
+                srvobj = ViscaServiceRequest()
+                srvobj.type = ViscaServiceRequest.SET_DIGITAL_OUTPUT
+                srvobj.command = self.digital_output
+                res:ViscaServiceResponse = viscacam_srvr(srvobj)
+                if(res.ack.data):
+                    srvobj.type = ViscaServiceRequest.SET_RESOLUTION
+                    srvobj.command = self.resolution
+                    res:ViscaServiceResponse = viscacam_srvr(srvobj)
+                    if(res.ack.data): #toggle flag and reboot
+                        print('\nDone Setting up for First Run: \n', res)
+                        self.cnf_data['first_run'] = False
+                        with open(self.cnf_path, 'w') as file:
+                            yaml.dump(self.cnf_data, file)
+                        print('FIRSTRUN flag unset success!')
+                        subprocess.run('sudo reboot', shell=True, capture_output=False)
+            except rospy.ServiceException as e:
+                print('Exception occurred!:, ', e)
+        except rospy.ROSException as e:
+            print('Visca Server not found!')
+    
     def bring_up(self):
         if(self.can_config_eeprom):
             self.config_eeprom()
+        if(self.is_first_run):
+            self.config_first_run()
 
         if(not self.remote_run):
             self.th = threading.Thread(target=lambda: subprocess.run('roslaunch visca_ros visca_camera.launch', shell=True, capture_output=False))

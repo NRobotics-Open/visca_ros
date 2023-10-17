@@ -5,5 +5,10 @@
       <arg name="video_stream_provider" value="0" />
       <arg name="visualize" value="false"/>
     </include>
-    <node name="visca_camera_node" pkg="visca_ros" type="visca_node" output="screen" />
+    <node name="web_video_server_node" pkg="web_video_server" type="web_video_server" output="screen">
+      <arg name="port" value="8081"/>
+    </node>
+    <node name="visca_camera_node" pkg="visca_ros" type="visca_node" output="screen">
+      <arg name="max_zoom_value" value="31424"/>
+    </node>
 </launch>
