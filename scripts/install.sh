@@ -2,18 +2,14 @@
 
 
 # Add autostart on bootup
+echo "Copying service file ..."
+sudo cp visca.service /etc/systemd/system/
 
-# Absolute path to this script, e.g. /home/user/bin/foo.sh
-SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in, thus /home/user/bin
-SCRIPT_DIR=$(dirname "$SCRIPT")
+echo "Reloading daemon ..."
+sudo systemctl daemon-reload
 
-mkdir -p /home/$USER/.config/autostart
+echo "Enabling service ..."
+sudo systemctl enable visca.service
 
-cat <<EOF >/home/$USER/.config/autostart/CameraLauncher.desktop
-[Desktop Entry]
-Type=Application
-Name=VISCA Camera Launcher
-Exec=bash $SCRIPT_DIR/start.sh &
-Comment=VISCA Camera Autostart
-EOF
+echo "Restarting PC!"
+sudo reboot

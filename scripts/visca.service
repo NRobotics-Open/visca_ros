@@ -1,0 +1,10 @@
+[Unit]
+Description=Visca Camera Service
+After=network.target
+
+[Service]
+User=mobrob-dev
+ExecStart=/bin/bash /home/mobrob-dev/mobrob_ws/src/visca_ros/scripts/start.sh
+
+[Install]
+WantedBy=multi-user.target
