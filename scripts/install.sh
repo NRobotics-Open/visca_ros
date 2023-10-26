@@ -11,5 +11,4 @@ sudo systemctl daemon-reload
 echo "Enabling service ..."
 sudo systemctl enable visca.service
 
-echo "Restarting PC!"
-sudo reboot
+echo "Install completed!"
