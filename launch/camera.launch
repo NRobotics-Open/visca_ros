@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="camera_name" default="camera" />
+    <arg name="camera_name" default="zoomcam" />
   	<!-- video_stream_provider can be a number as a video device or a url of a video stream -->
   	<arg name="video_stream_provider" default="0" />
   	<!-- set camera fps to -->
@@ -14,7 +14,7 @@
   	<!-- By default, calibrations are stored to file://${ROS_HOME}/camera_info/${NAME}.yaml
   	To use your own fill this arg with the corresponding url, e.g.:
   	"file:///$(find your_camera_package)/config/your_camera.yaml" -->
-    <arg name="camera_info_url" default="" />
+    <arg name="camera_info_url" value="file:///$(find visca_ros)/config/camera_info.yaml" />
   	<!-- flip the image horizontally (mirror it) -->
   	<arg name="flip_horizontal" default="false" />
   	<!-- flip the image vertically -->
