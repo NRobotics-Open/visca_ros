@@ -1,0 +1,26 @@
+image_width: 704
+image_height: 576
+camera_name: zoomcam
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [670.0,    0. , 370.0,
+           0.  , 670.0, 290.0,
+           0.  ,    0. ,   1. ]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 4
+  data: [0.0, 0.0, 0.0, 0.0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [1., 0., 0., 0.,
+         0., 1., 0., 0.,
+         0., 0., 1., 0.]

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <include file="$(find visca_ros)/launch/camera.launch">
-      <arg name="camera_name" value="zoomcamera" />
+      <arg name="camera_name" value="zoomcam" />
       <arg name="video_stream_provider" value="0" />
       <arg name="visualize" value="false"/>
     </include>
